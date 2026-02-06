@@ -57,5 +57,5 @@ After first release is published on GitHub:
    - `id`: `paste-rename`
    - `name`: `Paste Rename`
    - `author`: `rookie`
-   - `repo`: your GitHub repo URL
+   - `repo`: `https://github.com/rookie-ricardo/obsidian-paste-rename`
 3. Wait for review and merge.
