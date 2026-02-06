@@ -3,7 +3,7 @@
   "name": "Paste Rename",
   "version": "1.0.0",
   "minAppVersion": "1.5.0",
-  "description": "Intercept paste/drop files, archive with dynamic path and UUID/HASH naming, and insert links that follow your Obsidian link style.",
+  "description": "Intercept paste/drop files, archive with dynamic path and UUID/HASH naming, and insert links using your preferred link style.",
   "author": "rookie",
   "isDesktopOnly": false
 }
