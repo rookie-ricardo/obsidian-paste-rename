@@ -21,7 +21,7 @@ Add an object in `community-plugins.json`:
   "name": "Paste Rename",
   "author": "rookie",
   "description": "Intercept paste/drop files, archive with dynamic path and UUID/HASH naming, and insert links following Obsidian link style.",
-  "repo": "https://github.com/rookie-ricardo/obsidian-paste-rename"
+  "repo": "rookie-ricardo/obsidian-paste-rename"
 }
 ```
 

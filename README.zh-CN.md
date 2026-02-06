@@ -108,5 +108,5 @@ assets/2026/02/测试文件-123e4567-e89b-12d3-a456-426614174000.png
    - `id`: `paste-rename`
    - `name`: `Paste Rename`
    - `author`: `rookie`
-   - `repo`: `https://github.com/rookie-ricardo/obsidian-paste-rename`
+   - `repo`: `rookie-ricardo/obsidian-paste-rename`
 3. 等待审核与合并。
