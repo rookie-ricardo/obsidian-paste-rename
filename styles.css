@@ -1,0 +1,106 @@
+.paste-rename-setting-guide {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  background: var(--background-secondary);
+}
+
+.paste-rename-setting-guide h3 {
+  margin-top: 0;
+  margin-bottom: 6px;
+  font-size: var(--font-ui-medium);
+  line-height: 1.2;
+  margin-left: -4px;
+  padding: 0;
+}
+
+.paste-rename-setting-guide h3,
+.paste-rename-setting-guide p,
+.paste-rename-setting-guide ul {
+  margin-left: 0;
+}
+
+.paste-rename-setting-guide p {
+  margin-top: 0;
+  margin-bottom: 6px;
+  font-size: var(--font-ui-smaller);
+  line-height: 1.35;
+}
+
+.paste-rename-setting-guide ul {
+  margin-top: 0;
+  margin-bottom: 6px;
+  padding-left: 18px;
+}
+
+.paste-rename-setting-guide li {
+  font-size: var(--font-ui-smaller);
+  line-height: 1.35;
+  margin-bottom: 2px;
+}
+
+.paste-rename-setting-example {
+  font-family: var(--font-monospace);
+  font-size: var(--font-ui-smaller);
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  padding: 6px 8px;
+  overflow-wrap: anywhere;
+}
+
+.paste-rename-setting-preview {
+  margin-top: 6px;
+}
+
+.paste-rename-setting-preview-title {
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.paste-rename-setting-preview-code {
+  font-family: var(--font-monospace);
+  font-size: var(--font-ui-smaller);
+  background: var(--background-primary);
+  border: 1px dashed var(--background-modifier-border);
+  border-radius: 6px;
+  padding: 5px 8px;
+  margin-bottom: 4px;
+  overflow-wrap: anywhere;
+}
+
+.paste-rename-setting-error {
+  color: var(--text-error);
+  font-size: var(--font-ui-smaller);
+  margin-top: 6px;
+  margin-bottom: 12px;
+}
+
+.paste-rename-pattern-setting .setting-item-control {
+  flex: 1 1 auto;
+  max-width: none;
+  margin-left: 16px;
+  align-self: flex-start;
+  justify-content: flex-end;
+}
+
+.paste-rename-pattern-setting .setting-item-control input[type="text"] {
+  width: min(840px, 100%);
+  min-width: 520px;
+}
+
+.paste-rename-pattern-setting {
+  align-items: flex-start;
+}
+
+.paste-rename-pattern-setting .setting-item-info {
+  padding-right: 12px;
+}
+
+@media (max-width: 980px) {
+  .paste-rename-pattern-setting .setting-item-control input[type="text"] {
+    min-width: 320px;
+  }
+}

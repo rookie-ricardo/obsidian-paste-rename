@@ -1,0 +1,59 @@
+name: Release Obsidian plugin
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build plugin
+        run: npm run build
+
+      - name: Validate release version
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          MANIFEST_VERSION="$(node -p "JSON.parse(require('fs').readFileSync('manifest.json', 'utf8')).version")"
+          PACKAGE_VERSION="$(node -p "JSON.parse(require('fs').readFileSync('package.json', 'utf8')).version")"
+          if [ "$TAG" != "$MANIFEST_VERSION" ]; then
+            echo "Tag version ($TAG) does not match manifest version ($MANIFEST_VERSION)."
+            exit 1
+          fi
+          if [ "$MANIFEST_VERSION" != "$PACKAGE_VERSION" ]; then
+            echo "Manifest version ($MANIFEST_VERSION) does not match package version ($PACKAGE_VERSION)."
+            exit 1
+          fi
+
+      - name: Create zip artifact
+        run: |
+          mkdir -p release/paste-rename
+          cp manifest.json main.js styles.css release/paste-rename/
+          cd release
+          zip -r paste-rename-${GITHUB_REF_NAME}.zip paste-rename
+
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            manifest.json
+            main.js
+            styles.css
+            release/paste-rename-${{ github.ref_name }}.zip
+          fail_on_unmatched_files: true

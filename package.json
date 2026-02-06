@@ -1,0 +1,28 @@
+{
+  "name": "paste-rename",
+  "version": "0.1.0",
+  "description": "Obsidian plugin for paste/drop asset archiving with UUID/HASH naming and link-style-aware insertion",
+  "main": "main.js",
+  "scripts": {
+    "build": "node esbuild.config.mjs production",
+    "dev": "node esbuild.config.mjs",
+    "version": "node version-bump.mjs && git add manifest.json versions.json",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [],
+  "author": "rookie",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@jsquash/oxipng": "^2.3.0",
+    "obsidian": "^1.11.4"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.1",
+    "esbuild": "^0.27.3",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}
