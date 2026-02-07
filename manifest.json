@@ -1,7 +1,7 @@
 {
   "id": "paste-rename",
   "name": "Paste Rename",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "minAppVersion": "1.5.0",
   "description": "Intercept paste/drop files, archive with dynamic path and UUID/HASH naming, and insert links using your preferred link style.",
   "author": "rookie",
