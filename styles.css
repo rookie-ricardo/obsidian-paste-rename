@@ -6,16 +6,29 @@
   background: var(--background-secondary);
 }
 
-.paste-rename-setting-guide h3 {
+.paste-rename-page-heading {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.paste-rename-guide-heading {
+  border: 0;
+  padding: 0;
+  min-height: auto;
+}
+
+.paste-rename-guide-heading .setting-item-info {
+  padding: 0;
+}
+
+.paste-rename-guide-heading .setting-item-name {
   margin-top: 0;
   margin-bottom: 6px;
   font-size: var(--font-ui-medium);
   line-height: 1.2;
-  margin-left: -4px;
-  padding: 0;
 }
 
-.paste-rename-setting-guide h3,
+.paste-rename-setting-guide .setting-item-name,
 .paste-rename-setting-guide p,
 .paste-rename-setting-guide ul {
   margin-left: 0;

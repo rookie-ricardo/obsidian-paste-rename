@@ -33,7 +33,7 @@ export default class PasteRenamePlugin extends Plugin {
     try {
       validateSettings(merged);
       this.settings = merged;
-    } catch (_error) {
+    } catch {
       this.settings = DEFAULT_SETTINGS;
       new Notice("Paste Rename: settings were invalid and have been reset to defaults.");
       await this.saveData(this.settings);

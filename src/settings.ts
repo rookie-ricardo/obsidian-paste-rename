@@ -60,7 +60,8 @@ export class PasteRenameSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
 
-    containerEl.createEl("h2", { text: "Paste Rename" });
+    const pageHeading = new Setting(containerEl).setName("Paste rename").setHeading();
+    pageHeading.settingEl.addClass("paste-rename-page-heading");
 
     this.addPatternSetting(containerEl);
     this.addCompressionSetting(containerEl);
@@ -68,7 +69,8 @@ export class PasteRenameSettingTab extends PluginSettingTab {
 
   private addPatternSetting(containerEl: HTMLElement): void {
     const guide = containerEl.createDiv({ cls: "paste-rename-setting-guide" });
-    guide.createEl("h3", { text: "Asset pattern" });
+    const guideHeading = new Setting(guide).setName("Asset pattern").setHeading();
+    guideHeading.settingEl.addClass("paste-rename-guide-heading");
     guide.createEl("p", { text: "Single pattern for folder + filename generation. Extension is appended automatically." });
     guide.createEl("p", { text: "Available variables:" });
     const list = guide.createEl("ul");
@@ -92,7 +94,7 @@ export class PasteRenameSettingTab extends PluginSettingTab {
         const sampleLink = shouldUseWikilinks(this.app) ? `![[${samplePath}]]` : `![](<${samplePath}>)`;
         previewPathEl.setText(`Saved as: ${samplePath}`);
         previewLinkEl.setText(`Inserted link: ${sampleLink}`);
-      } catch (_error) {
+      } catch {
         previewPathEl.setText("Saved as: (invalid pattern)");
         previewLinkEl.setText("Inserted link: (invalid pattern)");
       }

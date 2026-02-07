@@ -636,7 +636,7 @@ var LosslessPngCompressor = class {
       const module2 = await Promise.resolve().then(() => (init_oxipng(), oxipng_exports));
       const optimized = await module2.optimise(input);
       return optimized.byteLength < input.byteLength ? optimized : input;
-    } catch (_error) {
+    } catch {
       return input;
     }
   }
@@ -650,7 +650,7 @@ var import_obsidian3 = require("obsidian");
 
 // src/path.ts
 var import_obsidian = require("obsidian");
-var ILLEGAL_FILE_CHARS = /[<>:"/\\|?*\u0000-\u001f]/g;
+var ILLEGAL_FILE_CHARS = /[<>:"/\\|?*]/g;
 var MIME_EXTENSION_MAP = {
   "image/png": "png",
   "image/jpeg": "jpg",
@@ -668,7 +668,8 @@ var MIME_EXTENSION_MAP = {
   "application/x-zip-compressed": "zip"
 };
 function sanitizeFileNamePart(value) {
-  const cleaned = value.replace(ILLEGAL_FILE_CHARS, "-").replace(/\s+/g, " ").trim().replace(/[. ]+$/g, "");
+  const withoutControlChars = stripControlChars(value);
+  const cleaned = withoutControlChars.replace(ILLEGAL_FILE_CHARS, "-").replace(/\s+/g, " ").trim().replace(/[. ]+$/g, "");
   return cleaned.length > 0 ? cleaned : "untitled";
 }
 function getNoteBaseName(fileName) {
@@ -713,6 +714,14 @@ function extensionFromName(fileName) {
 function sanitizeExtension(extension) {
   const normalized = extension.replace(/^\.+/, "").toLowerCase().replace(/[^a-z0-9]/g, "");
   return normalized || "bin";
+}
+function stripControlChars(value) {
+  let result = "";
+  for (const char of value) {
+    const code = char.charCodeAt(0);
+    result += code <= 31 ? "-" : char;
+  }
+  return result;
 }
 
 // src/writeback.ts
@@ -1012,13 +1021,15 @@ var PasteRenameSettingTab = class extends import_obsidian4.PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    containerEl.createEl("h2", { text: "Paste Rename" });
+    const pageHeading = new import_obsidian4.Setting(containerEl).setName("Paste rename").setHeading();
+    pageHeading.settingEl.addClass("paste-rename-page-heading");
     this.addPatternSetting(containerEl);
     this.addCompressionSetting(containerEl);
   }
   addPatternSetting(containerEl) {
     const guide = containerEl.createDiv({ cls: "paste-rename-setting-guide" });
-    guide.createEl("h3", { text: "Asset pattern" });
+    const guideHeading = new import_obsidian4.Setting(guide).setName("Asset pattern").setHeading();
+    guideHeading.settingEl.addClass("paste-rename-guide-heading");
     guide.createEl("p", { text: "Single pattern for folder + filename generation. Extension is appended automatically." });
     guide.createEl("p", { text: "Available variables:" });
     const list = guide.createEl("ul");
@@ -1042,7 +1053,7 @@ var PasteRenameSettingTab = class extends import_obsidian4.PluginSettingTab {
         const sampleLink = shouldUseWikilinks2(this.app) ? `![[${samplePath}]]` : `![](<${samplePath}>)`;
         previewPathEl.setText(`Saved as: ${samplePath}`);
         previewLinkEl.setText(`Inserted link: ${sampleLink}`);
-      } catch (_error) {
+      } catch {
         previewPathEl.setText("Saved as: (invalid pattern)");
         previewLinkEl.setText("Inserted link: (invalid pattern)");
       }
@@ -1282,7 +1293,7 @@ var PasteRenamePlugin = class extends import_obsidian6.Plugin {
     try {
       validateSettings(merged);
       this.settings = merged;
-    } catch (_error) {
+    } catch {
       this.settings = DEFAULT_SETTINGS;
       new import_obsidian6.Notice("Paste Rename: settings were invalid and have been reset to defaults.");
       await this.saveData(this.settings);

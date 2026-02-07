@@ -23,7 +23,7 @@ export class PasteDropController {
       document,
       "paste",
       (evt) => {
-        void this.onPaste(evt as ClipboardEvent);
+        void this.onPaste(evt);
       },
       captureOptions,
     );
@@ -32,7 +32,7 @@ export class PasteDropController {
       document,
       "drop",
       (evt) => {
-        void this.onDrop(evt as DragEvent);
+        void this.onDrop(evt);
       },
       captureOptions,
     );

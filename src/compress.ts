@@ -17,7 +17,7 @@ export class LosslessPngCompressor implements Compressor {
       const module = await import("@jsquash/oxipng");
       const optimized = await module.optimise(input);
       return optimized.byteLength < input.byteLength ? optimized : input;
-    } catch (_error) {
+    } catch {
       return input;
     }
   }

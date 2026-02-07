@@ -1,6 +1,6 @@
 import { normalizePath } from "obsidian";
 
-const ILLEGAL_FILE_CHARS = /[<>:"/\\|?*\u0000-\u001f]/g;
+const ILLEGAL_FILE_CHARS = /[<>:"/\\|?*]/g;
 
 const MIME_EXTENSION_MAP: Record<string, string> = {
   "image/png": "png",
@@ -20,7 +20,8 @@ const MIME_EXTENSION_MAP: Record<string, string> = {
 };
 
 export function sanitizeFileNamePart(value: string): string {
-  const cleaned = value
+  const withoutControlChars = stripControlChars(value);
+  const cleaned = withoutControlChars
     .replace(ILLEGAL_FILE_CHARS, "-")
     .replace(/\s+/g, " ")
     .trim()
@@ -101,4 +102,13 @@ function extensionFromName(fileName: string): string | null {
 function sanitizeExtension(extension: string): string {
   const normalized = extension.replace(/^\.+/, "").toLowerCase().replace(/[^a-z0-9]/g, "");
   return normalized || "bin";
+}
+
+function stripControlChars(value: string): string {
+  let result = "";
+  for (const char of value) {
+    const code = char.charCodeAt(0);
+    result += code <= 31 ? "-" : char;
+  }
+  return result;
 }
