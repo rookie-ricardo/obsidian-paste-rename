@@ -1021,8 +1021,6 @@ var PasteRenameSettingTab = class extends import_obsidian4.PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    const pageHeading = new import_obsidian4.Setting(containerEl).setName("Paste rename").setHeading();
-    pageHeading.settingEl.addClass("paste-rename-page-heading");
     this.addPatternSetting(containerEl);
     this.addCompressionSetting(containerEl);
   }

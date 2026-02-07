@@ -6,11 +6,6 @@
   background: var(--background-secondary);
 }
 
-.paste-rename-page-heading {
-  padding-left: 0;
-  padding-right: 0;
-}
-
 .paste-rename-guide-heading {
   border: 0;
   padding: 0;

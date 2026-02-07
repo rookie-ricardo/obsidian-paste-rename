@@ -60,9 +60,6 @@ export class PasteRenameSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
 
-    const pageHeading = new Setting(containerEl).setName("Paste rename").setHeading();
-    pageHeading.settingEl.addClass("paste-rename-page-heading");
-
     this.addPatternSetting(containerEl);
     this.addCompressionSetting(containerEl);
   }
