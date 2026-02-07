@@ -110,3 +110,28 @@ assets/2026/02/测试文件-123e4567-e89b-12d3-a456-426614174000.png
    - `author`: `rookie`
    - `repo`: `rookie-ricardo/obsidian-paste-rename`
 3. 等待审核与合并。
+
+## 社区审核问题记录（本项目真实踩坑）
+
+### PR / 条目校验问题（`obsidian-releases` PR）
+
+- PR 描述必须严格使用官方模板并勾选清单，否则校验失败。
+- 新插件条目必须追加到 `community-plugins.json` 最末尾。
+- PR 里的插件描述需与仓库 `manifest.json`、最新 Release 信息保持一致。
+- 插件短描述中不要包含 `Obsidian` 这个词。
+- Release 的 tag/标题必须与 `manifest.json` 版本号完全一致（不能带 `v` 前缀）。
+
+### 自动代码扫描问题（`ObsidianReviewBot`）
+
+- 设置页 UI 文案要使用 sentence case（句式大小写风格）。
+- 设置页标题中不要再写插件名。
+- 标题要用 `new Setting(containerEl).setName(...).setHeading()`，不要手写 HTML heading。
+- 删除不改变类型的多余类型断言。
+- 避免在正则中使用会触发规则的控制字符（例如 `\\x00`、`\\x1f`）。
+- 清理未使用变量（包括未使用的 `catch` 参数）。
+
+### 重新提交前自检
+
+- 发一个新的 patch 版本，并确认 Release 附件包含 `main.js`、`manifest.json`、`styles.css`。
+- 若描述或版本相关信息有改动，同步更新 `community-plugins.json` 条目。
+- 向 fork 的 PR 分支再推一个提交，触发 `plugin-validation` 重新校验。

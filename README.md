@@ -110,3 +110,28 @@ After first GitHub release:
    - `author`: `rookie`
    - `repo`: `rookie-ricardo/obsidian-paste-rename`
 3. Wait for review and merge.
+
+## Community Review Notes (Real Issues We Hit)
+
+### PR / Entry validation issues (`obsidian-releases` PR)
+
+- PR body must follow the official template exactly (with checklist). Otherwise validation fails.
+- New plugin entry must be appended at the end of `community-plugins.json`.
+- Plugin description in PR context must match `manifest.json` and latest GitHub release metadata.
+- Do not include the word `Obsidian` in the short plugin description text.
+- Release tag / release title must match the exact version number in `manifest.json` (no `v` prefix).
+
+### Automated code scan issues (`ObsidianReviewBot`)
+
+- Use sentence case for settings UI text.
+- Do not include plugin name in settings headings.
+- Use `new Setting(containerEl).setName(...).setHeading()` instead of creating heading HTML directly.
+- Remove unnecessary type assertions that do not change expression type.
+- Avoid control characters in regular expressions (for example `\\x00`, `\\x1f` in lint-sensitive contexts).
+- Remove unused variables (including unused `catch` params).
+
+### Re-submission checklist
+
+- Release a new patch version and publish assets (`main.js`, `manifest.json`, `styles.css`).
+- Update `community-plugins.json` entry if description/version-related text changed.
+- Push a new commit to your fork PR branch to retrigger `plugin-validation`.
