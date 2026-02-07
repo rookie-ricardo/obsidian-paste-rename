@@ -81,6 +81,8 @@ assets/2026/02/测试文件-123e4567-e89b-12d3-a456-426614174000.png
 
 - `npm run dev`：监听构建
 - `npm run build`：生产构建
+- `npm run lint`：运行 Obsidian 官方 ESLint 规则（`eslint-plugin-obsidianmd`）
+- `npm run lint:fix`：自动修复可修复的 lint 问题
 - `npm test`：运行单元测试
 
 ## 使用 GitHub Actions 发布

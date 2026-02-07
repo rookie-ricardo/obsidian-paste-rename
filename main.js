@@ -1293,7 +1293,7 @@ var PasteRenamePlugin = class extends import_obsidian6.Plugin {
       this.settings = merged;
     } catch {
       this.settings = DEFAULT_SETTINGS;
-      new import_obsidian6.Notice("Paste Rename: settings were invalid and have been reset to defaults.");
+      new import_obsidian6.Notice("Paste rename settings were invalid and have been reset to defaults.");
       await this.saveData(this.settings);
     }
   }

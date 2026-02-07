@@ -81,6 +81,8 @@ assets/2026/02/Test Note-123e4567-e89b-12d3-a456-426614174000.png
 
 - `npm run dev`: watch build
 - `npm run build`: production build
+- `npm run lint`: run official Obsidian ESLint checks (`eslint-plugin-obsidianmd`)
+- `npm run lint:fix`: auto-fix lint findings when possible
 - `npm test`: run unit tests
 
 ## Releasing with GitHub Actions
