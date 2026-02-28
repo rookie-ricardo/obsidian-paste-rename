@@ -1,4 +1,4 @@
-import { App, normalizePath, Vault } from "obsidian";
+import { App, normalizePath, Notice, Vault } from "obsidian";
 import { Compressor } from "./compress";
 import { buildFileName, joinVaultPath, resolveFileExtension } from "./path";
 import { PasteRenameSettings } from "./settings";
@@ -31,7 +31,6 @@ export class AssetStorage {
     const settings = this.settingsProvider();
     const extension = resolveFileExtension(file);
     const rawBuffer = await file.arrayBuffer();
-    const content = await this.maybeCompress(rawBuffer, file.type, extension, settings);
 
     const vaultPath = await resolveUniqueVaultPath({
       settings,
@@ -41,7 +40,8 @@ export class AssetStorage {
     });
 
     await ensureFolderExists(this.app.vault, getParentFolderPath(vaultPath));
-    await this.app.vault.createBinary(vaultPath, content);
+    await this.app.vault.createBinary(vaultPath, rawBuffer);
+    this.scheduleBackgroundCompression(vaultPath, rawBuffer, file.type, extension, settings);
     const isImage = isImageFile(file.type, extension);
 
     return {
@@ -69,6 +69,53 @@ export class AssetStorage {
     }
 
     return this.compressor.compress(input, mime, extension);
+  }
+
+  private scheduleBackgroundCompression(
+    vaultPath: string,
+    input: ArrayBuffer,
+    mime: string,
+    extension: string,
+    settings: PasteRenameSettings,
+  ): void {
+    if (!settings.compressionEnabled || settings.compressionMode !== "lossless-only") {
+      return;
+    }
+
+    if (!this.compressor.supports(mime, extension)) {
+      return;
+    }
+
+    globalThis.setTimeout(() => {
+      void this.compressAndReplace(vaultPath, input, mime, extension, settings);
+    }, 0);
+  }
+
+  private async compressAndReplace(
+    vaultPath: string,
+    input: ArrayBuffer,
+    mime: string,
+    extension: string,
+    settings: PasteRenameSettings,
+  ): Promise<void> {
+    const compressed = await this.maybeCompress(input, mime, extension, settings);
+    if (compressed.byteLength >= input.byteLength) {
+      return;
+    }
+
+    const file = this.app.vault.getFileByPath(vaultPath);
+    if (!file) {
+      return;
+    }
+
+    try {
+      await this.app.vault.modifyBinary(file, compressed);
+      if (settings.compressionNoticeEnabled) {
+        new Notice("Paste rename optimized an image in the background.");
+      }
+    } catch {
+      // Ignore background compression failures so the pasted file remains usable.
+    }
   }
 }
 

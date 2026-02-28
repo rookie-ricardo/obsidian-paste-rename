@@ -9,6 +9,7 @@ export interface PasteRenameSettings {
   dedupeMode: "regen-unique";
   writebackSyntax: "follow-app-setting";
   compressionEnabled: boolean;
+  compressionNoticeEnabled: boolean;
   compressionMode: "lossless-only";
 }
 
@@ -19,6 +20,7 @@ export const DEFAULT_SETTINGS: PasteRenameSettings = {
   dedupeMode: "regen-unique",
   writebackSyntax: "follow-app-setting",
   compressionEnabled: false,
+  compressionNoticeEnabled: false,
   compressionMode: "lossless-only",
 };
 
@@ -125,12 +127,22 @@ export class PasteRenameSettingTab extends PluginSettingTab {
 
   private addCompressionSetting(containerEl: HTMLElement): void {
     new Setting(containerEl)
-      .setName("Enable lossless PNG compression")
-      .setDesc("Default off. When enabled, PNG files are optimized with oxipng wasm if output is smaller.")
+      .setName("Enable lossless image compression")
+      .setDesc("Disabled by default. Larger pasted images are optimized in the background only when the result is smaller.")
       .addToggle((toggle) => {
         toggle.setValue(this.plugin.settings.compressionEnabled);
         toggle.onChange(async (value) => {
           await this.plugin.updateSettings({ compressionEnabled: value });
+        });
+      });
+
+    new Setting(containerEl)
+      .setName("Notify after background optimization")
+      .setDesc("Disabled by default. Shows a notice only after a pasted image is replaced with a smaller optimized file.")
+      .addToggle((toggle) => {
+        toggle.setValue(this.plugin.settings.compressionNoticeEnabled);
+        toggle.onChange(async (value) => {
+          await this.plugin.updateSettings({ compressionNoticeEnabled: value });
         });
       });
   }

@@ -1,5 +1,5 @@
 import { Notice, Plugin } from "obsidian";
-import { createDefaultCompressor } from "./src/compress";
+import { createDefaultCompressor, prewarmDefaultCompressor } from "./src/compress";
 import { PasteDropController } from "./src/events";
 import { PasteRenameSettings, DEFAULT_SETTINGS, PasteRenameSettingTab, coerceSettings, validateSettings } from "./src/settings";
 import { AssetStorage } from "./src/storage";
@@ -15,6 +15,7 @@ export default class PasteRenamePlugin extends Plugin {
     this.storage = new AssetStorage(this.app, () => this.settings, createDefaultCompressor());
     this.controller = new PasteDropController(this.app, () => this.settings, this.storage);
     this.controller.register(this);
+    prewarmDefaultCompressor();
 
     this.addSettingTab(new PasteRenameSettingTab(this.app, this));
   }

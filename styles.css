@@ -87,28 +87,25 @@
 }
 
 .paste-rename-pattern-setting .setting-item-control {
-  flex: 1 1 auto;
+  width: 100%;
   max-width: none;
-  margin-left: 16px;
-  align-self: flex-start;
-  justify-content: flex-end;
+  margin-left: 0;
+  align-self: stretch;
+  justify-content: flex-start;
 }
 
 .paste-rename-pattern-setting .setting-item-control input[type="text"] {
-  width: min(840px, 100%);
-  min-width: 520px;
+  width: 100%;
+  min-width: 0;
 }
 
 .paste-rename-pattern-setting {
-  align-items: flex-start;
+  display: block;
 }
 
 .paste-rename-pattern-setting .setting-item-info {
-  padding-right: 12px;
-}
-
-@media (max-width: 980px) {
-  .paste-rename-pattern-setting .setting-item-control input[type="text"] {
-    min-width: 320px;
-  }
+  width: 100%;
+  max-width: none;
+  padding-right: 0;
+  margin-bottom: 8px;
 }
